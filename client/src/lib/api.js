@@ -19,12 +19,7 @@ const withScheme = configured
 
 const BASE = `${withScheme.replace(/\/$/, '')}/api`
 
-if (import.meta.env.PROD && !configured) {
-  console.warn(
-    '[api] VITE_API_URL is not set — this build will call its own origin and fail. ' +
-      'Set it in the host dashboard and redeploy.'
-  )
-} else if (import.meta.env.PROD && raw && !configured) {
+if (import.meta.env.PROD && raw && !configured) {
   console.warn(
     `[api] Ignoring VITE_API_URL="${raw}" — not a public hostname. ` +
       'Falling back to a same-origin /api call, proxied by the host rewrite rule.'
