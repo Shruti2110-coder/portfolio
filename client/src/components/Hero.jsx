@@ -8,8 +8,7 @@ export default function Hero({ stats, skills }) {
 
   return (
     <header className="hero" id="top">
-      <div className="shell hero-grid">
-        <div className="hero-copy">
+      <div className="shell">
         <Reveal>
           <span className="hero-status">
             <span className="nav-dot" />
@@ -46,14 +45,6 @@ export default function Hero({ stats, skills }) {
           </div>
         </Reveal>
 
-        </div>
-
-        <Reveal delay={180} className="hero-portrait-wrap">
-          <div className="hero-portrait" role="img" aria-label="Shruti Jain" />
-        </Reveal>
-      </div>
-
-      <div className="shell">
         <Reveal delay={280}>
           <div className="hero-meta">
             <div>

@@ -229,32 +229,6 @@ kbd {
    Hero
    ============================================================ */
 .hero { padding: clamp(60px, 12vh, 120px) 0 clamp(56px, 9vw, 104px); }
-.hero-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(240px, 26vw, 340px);
-  gap: clamp(28px, 5vw, 64px);
-  align-items: center;
-}
-@media (max-width: 860px) {
-  .hero-grid { grid-template-columns: 1fr; }
-  .hero-portrait-wrap { order: -1; max-width: 220px; }
-}
-
-/* Framed as a background so the crop can be tuned without re-cutting the file. */
-.hero-portrait {
-  aspect-ratio: 3 / 4;
-  border-radius: var(--radius);
-  border: 1px solid var(--line);
-  background-image: url('/shruti.jpg');
-  background-repeat: no-repeat;
-  background-size: 300%;
-  background-position: 52% 42%;
-  filter: saturate(0.92) contrast(1.02);
-  box-shadow: 0 28px 60px -34px rgba(0, 0, 0, 0.75);
-  transition: transform 0.5s var(--ease);
-}
-.hero-portrait:hover { transform: translateY(-4px); }
-
 .hero-status {
   display: inline-flex; align-items: center; gap: 9px;
   border: 1px solid var(--line);
