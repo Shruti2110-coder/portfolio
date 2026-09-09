@@ -2,9 +2,15 @@
 // In production there is no proxy, so the deployed API URL must be supplied at
 // build time via VITE_API_URL (Vite inlines VITE_* when the bundle is built —
 // setting it only in a local .env will NOT reach the deployed build).
-const configured = import.meta.env.VITE_API_URL?.trim()
+const raw = import.meta.env.VITE_API_URL?.trim()
 
-// Hosts like Render expose a bare hostname; add the scheme when it is missing.
+// A value with no dot is an internal service name (Render's `fromService`
+// resolves to one), which a browser cannot reach. Ignore it and fall back to a
+// same-origin /api call, which the host's rewrite rule proxies to the API.
+const isPublicHost = (v) => v.includes('://') || (v.includes('.') && !v.endsWith('.'))
+const configured = raw && isPublicHost(raw) ? raw : ''
+
+// Hosts may expose a bare hostname; add the scheme when it is missing.
 const withScheme = configured
   ? configured.includes('://')
     ? configured
@@ -18,13 +24,10 @@ if (import.meta.env.PROD && !configured) {
     '[api] VITE_API_URL is not set — this build will call its own origin and fail. ' +
       'Set it in the host dashboard and redeploy.'
   )
-} else if (import.meta.env.PROD && !configured.includes('.') && configured !== 'localhost') {
-  // Render's `fromService: property: host` yields the internal private-network
-  // name, which has no dot and is unreachable from a browser.
+} else if (import.meta.env.PROD && raw && !configured) {
   console.warn(
-    `[api] VITE_API_URL is "${configured}", which is not a public hostname — ` +
-      'it looks like an internal service name. Set it to the API\'s full public ' +
-      'URL (https://…onrender.com) and redeploy.'
+    `[api] Ignoring VITE_API_URL="${raw}" — not a public hostname. ` +
+      'Falling back to a same-origin /api call, proxied by the host rewrite rule.'
   )
 }
 
