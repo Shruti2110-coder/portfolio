@@ -31,11 +31,15 @@ services:
     envVars:
       - key: NODE_VERSION
         value: "22"
+      # Set this by hand in the Render dashboard to the API's PUBLIC url,
+      # e.g. https://portfolio-api-xxxx.onrender.com
+      #
+      # Do NOT use `fromService: property: host` here — for a web service that
+      # resolves to the internal private-network name (just "portfolio-api-xxxx"),
+      # which the browser cannot reach. Vite bakes this in at build time, so
+      # after changing it you must trigger a redeploy of this service.
       - key: VITE_API_URL
-        fromService:
-          type: web
-          name: portfolio-api
-          property: host
+        sync: false
     routes:
       # Single-page app: every path serves index.html
       - type: rewrite

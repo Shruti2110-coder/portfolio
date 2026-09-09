@@ -18,6 +18,14 @@ if (import.meta.env.PROD && !configured) {
     '[api] VITE_API_URL is not set — this build will call its own origin and fail. ' +
       'Set it in the host dashboard and redeploy.'
   )
+} else if (import.meta.env.PROD && !configured.includes('.') && configured !== 'localhost') {
+  // Render's `fromService: property: host` yields the internal private-network
+  // name, which has no dot and is unreachable from a browser.
+  console.warn(
+    `[api] VITE_API_URL is "${configured}", which is not a public hostname — ` +
+      'it looks like an internal service name. Set it to the API\'s full public ' +
+      'URL (https://…onrender.com) and redeploy.'
+  )
 }
 
 async function request(path, options = {}) {
