@@ -247,8 +247,8 @@ kbd {
   border: 1px solid var(--line);
   background-image: url('/shruti.jpg');
   background-repeat: no-repeat;
-  background-size: 270%;
-  background-position: 54% 48%;
+  background-size: 300%;
+  background-position: 52% 42%;
   filter: saturate(0.92) contrast(1.02);
   box-shadow: 0 28px 60px -34px rgba(0, 0, 0, 0.75);
   transition: transform 0.5s var(--ease);
